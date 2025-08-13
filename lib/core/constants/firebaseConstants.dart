@@ -1,0 +1,11 @@
+class FirebaseCollections{
+
+  static const addFirmCollection='Firms';
+  static const affiliatesCollection='affiliates';
+  static const leadsCollection='leads';
+  static const offersCollection='offers';
+  static const ServiceLeadsCollection='serviceLeads';
+  static const industriesCollection='industries';
+
+
+}
