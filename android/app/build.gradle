@@ -31,7 +31,7 @@ if (keystorePropertiesFile.exists()) {
 }
 android {
     namespace = "com.icanyontechnologies.refrrApp"
-    compileSdk = 35
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -49,9 +49,15 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
-        targetSdk = 35
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        multiDexEnabled true
+    }
+    dependencies {
+        // Your existing deeps...
+        implementation "androidx.core:core:1.17.0"
+        implementation "androidx.core:core-ktx:1.17.0"
     }
     signingConfigs {
         release {
@@ -77,8 +83,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.11.0-alpha02'
     configurations.all {
         resolutionStrategy {
-            force 'androidx.core:core-ktx:1.12.0'
-            force 'androidx.core:core:1.12.0'
+            force "androidx.core:core:1.13.1"
+            force "androidx.core:core-ktx:1.13.1"
         }
     }
 

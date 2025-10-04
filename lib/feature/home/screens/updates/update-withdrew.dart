@@ -45,7 +45,7 @@ class _UpdateWithdrewPageState extends State<UpdateWithdrewPage> {
           children: [
             SizedBox(height: height*.06,),
             Padding(
-              padding: EdgeInsets.only(left: width * .05, right: width * .05),
+              padding: EdgeInsets.only(left: width * .05, right: width * .02),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -54,15 +54,15 @@ class _UpdateWithdrewPageState extends State<UpdateWithdrewPage> {
                     style: GoogleFonts.roboto(
                       fontSize: width * 0.06,
                       fontWeight: FontWeight.w500,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
-                  IconButton(
-                    icon: Icon(Icons.close, color: Colors.white),
-                    onPressed: () {
+                  GestureDetector(
+                    onTap: () {
                       // Handle close action here
                       Navigator.pop(context); // or any other logic
                     },
+                    child:Icon(Icons.close, color: Colors.black),
                   ),
                 ],
               ),
@@ -75,16 +75,9 @@ class _UpdateWithdrewPageState extends State<UpdateWithdrewPage> {
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Color(0xFFF3F3F3),
                       borderRadius: BorderRadius.circular(30), // Curved edges
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
-                          spreadRadius: 4,
-                          blurRadius: 10,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
+
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,7 +88,7 @@ class _UpdateWithdrewPageState extends State<UpdateWithdrewPage> {
                           padding:  EdgeInsets.only(left: width*.06),
                           child: Text(
                             'CONGRATULATIONS!!',
-                            style: GoogleFonts.roboto(fontSize: width*.04,color:ColorConstants.primaryColor,
+                            style: GoogleFonts.roboto(fontSize: width*.04,color:Colors.black,
                                 fontWeight: FontWeight.w700),
                           ),
                         ),
@@ -239,7 +232,7 @@ class _UpdateWithdrewPageState extends State<UpdateWithdrewPage> {
                       children: [
                         Padding(
                           padding:  EdgeInsets.only(left: width*.01),
-                          child: Text('Bring Leads. Earn More.',style: GoogleFonts.roboto(color: Colors.white,fontSize: width*.065,
+                          child: Text('Bring Leads. Earn More.',style: GoogleFonts.roboto(color: Colors.black,fontSize: width*.065,
                               fontWeight: FontWeight.bold),),
                         ),
                         SizedBox(height: height*.01,),
@@ -247,7 +240,7 @@ class _UpdateWithdrewPageState extends State<UpdateWithdrewPage> {
                           padding:  EdgeInsets.only(left: width*.01),
                           child: Text('The more leads you share, the more money you make. Start referring and watch'
                               ' your income grow — right from your network.',
-                              style: GoogleFonts.roboto(color: Colors.white,fontSize: width*.035,
+                              style: GoogleFonts.roboto(color: Colors.black,fontSize: width*.035,
                               fontWeight: FontWeight.w400)),
                         ),
                       ],

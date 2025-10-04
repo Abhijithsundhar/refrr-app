@@ -26,7 +26,9 @@ class _WithdrawelpageState extends State<Withdrawelpage> {
       appBar: AppBar(
         backgroundColor: ColorConstants.primaryColor,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new, color: Colors.white),
+          icon: Icon(Icons.arrow_back_ios_new, color: Colors.black),
+          splashColor: Colors.transparent,
+          hoverColor: Colors.transparent,
           onPressed: () => Navigator.pop(context),
         ),
         elevation: 0,
@@ -42,7 +44,7 @@ class _WithdrawelpageState extends State<Withdrawelpage> {
               style: GoogleFonts.roboto(
                 fontSize: width * 0.05,
                 fontWeight: FontWeight.w700,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
           ),

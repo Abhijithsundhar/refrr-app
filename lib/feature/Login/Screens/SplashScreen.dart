@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:icanyon/core/constants/color-constnats.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -62,18 +63,19 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorConstants.primaryColor,
+      backgroundColor: ColorConstants.appBlue,
       body: Consumer(
           builder: (context,ref,child) {
             print("splashsssssssss");
             // final connectivityStatus = ref.watch(connectivityProvider);
             return Center(
               child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.3,
-                width: MediaQuery.of(context).size.width * 0.7,
+                height: height * 0.3,
+                width: width * 0.7,
                 child:
                 // connectivityStatus==ConnectivityStatus.connected?
-                Image.asset('assets/images/refrrWhiteLogo.png')
+                // Image.asset('assets/images/refrrWhiteLogo.png')
+                  SvgPicture.asset('assets/svg/refrrRoundLogo.svg')
                     // :const InternetError(),
               ), // Splash image
             );

@@ -37,7 +37,9 @@ class SelectFirm extends StatelessWidget {
         backgroundColor: ColorConstants.primaryColor,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new, color: Colors.white),
+          icon: Icon(Icons.arrow_back_ios_new, color: Colors.black,size: width*.06,),
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -56,7 +58,7 @@ class SelectFirm extends StatelessWidget {
                     style: GoogleFonts.roboto(
                       fontWeight: FontWeight.w700,
                       fontSize: width * .05,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
                   Padding(
@@ -69,7 +71,7 @@ class SelectFirm extends StatelessWidget {
                         );
                       },
                       child: CircleAvatar(
-                        backgroundColor: Colors.white,
+                        backgroundColor: Colors.black,
                         radius: width * .04,
                         child: CircleAvatar(
                           backgroundColor: ColorConstants.primaryColor,
@@ -77,7 +79,7 @@ class SelectFirm extends StatelessWidget {
                           child: Center(
                             child: Icon(
                               Icons.add,
-                              color: Colors.white,
+                              color: Colors.black,
                               size: width * .05,
                             ),
                           ),
@@ -91,7 +93,6 @@ class SelectFirm extends StatelessWidget {
 
             // Firm List Container
             Container(
-              margin: EdgeInsets.only(top: 30),
               width: double.infinity,
               height: height * 0.8,
               decoration: BoxDecoration(
@@ -109,14 +110,13 @@ class SelectFirm extends StatelessWidget {
                         itemCount: filteredFirms.length,
                         itemBuilder: (context, index) {
                           final firm = filteredFirms[index];
-
                           return Consumer(
                             builder: (BuildContext context, WidgetRef ref, Widget? child) {
                               return GestureDetector(
                                 onTap: () {
                                   showCommonAlertBox(
                                     context,
-                                    'Confirm lead submission to ${firm['name']??''}',
+                                    'Confirm submission of ${firm['name']??''} as a lead to ${lead.name??''}' ,
                                         () {
                                           // // Create a new Firestore reference
                                           // final docRef = FirebaseFirestore.instance
@@ -146,7 +146,6 @@ class SelectFirm extends StatelessWidget {
                                     'Confirm',
                                   );
                                 },
-
                                 child: buildFirmCard(firm, index),
                               );
                             },
@@ -171,8 +170,8 @@ Widget buildFirmCard(Map<String, dynamic> firm, int index) {
     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
-      border: Border.all(color: Colors.grey, width: 1.2),
-      color: Colors.white,
+      // border: Border.all(color: Colors.grey, width: 1.2),
+      color:Color(0xFFF3F3F3),
     ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

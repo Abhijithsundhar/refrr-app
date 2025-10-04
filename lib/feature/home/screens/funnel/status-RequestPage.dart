@@ -59,7 +59,9 @@ class _StatusRequestPageState extends State<StatusRequestPage> {
       backgroundColor: ColorConstants.primaryColor,
       elevation: 0,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
+        icon:  Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black,size: width*.06,),
+        splashColor: Colors.transparent,
+        hoverColor: Colors.transparent,
         onPressed: () {
           Navigator.of(context).pop();
         },
@@ -75,11 +77,11 @@ class _StatusRequestPageState extends State<StatusRequestPage> {
                 style: GoogleFonts.roboto(
                   fontSize: width * 0.05,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ),
-            SizedBox(height: height * .03),
+            SizedBox(height: height * .01 ),
             Container(
               width: double.infinity,
               padding: EdgeInsets.only(

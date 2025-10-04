@@ -39,7 +39,9 @@ class _ProfileState extends State<Profile> {
       appBar: AppBar(
         backgroundColor: ColorConstants.primaryColor,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new, color: Colors.white),
+          splashColor: Colors.transparent,
+          hoverColor: Colors.transparent,
+          icon: Icon(Icons.arrow_back_ios_new, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
         elevation: 0,

@@ -191,31 +191,30 @@ class _AddFirmScreenState extends State<AddFirmScreen> {
       backgroundColor: ColorConstants.primaryColor,
       appBar: AppBar(
         backgroundColor: ColorConstants.primaryColor,
-        leading: GestureDetector(onTap: () => Navigator.pop(context),
-            child: Icon(Icons.arrow_back_ios_new, color: Colors.white)),
+        leading: GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: Icon(Icons.arrow_back_ios_new, color: Colors.black),
+        ),
         elevation: 0,
-        toolbarHeight: height*.03,
+        toolbarHeight: height * .03,
+        titleSpacing: 0, // 👈 moves title closer to leading
+        title: Text(
+          'Add Lead',
+          style: GoogleFonts.roboto(
+            fontSize: width * 0.05,
+            fontWeight: FontWeight.w500,
+            color: Colors.black,
+          ),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.only(top: height*.03),
         child: Stack(
           children: [
-            Padding(
-              padding: EdgeInsets.only(left: width*.08, bottom: height*.1),
-              child: Text(
-                'Add Lead',
-                style: GoogleFonts.roboto(
-                  fontSize: width * 0.05,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
-                ),
-              ),
-            ),
             SingleChildScrollView(
               child: Container(
-                margin: EdgeInsets.only(top: height*.1),
                 width: double.infinity,
-                padding: EdgeInsets.only(top: height*.07, left: 16, right: 16),
+                padding: EdgeInsets.only(top: height*.02, left: 16, right: 16),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(45)),

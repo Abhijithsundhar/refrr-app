@@ -128,3 +128,173 @@ void showCommonAlertBox(BuildContext context, String message, VoidCallback onYes
     },
   );
 }
+
+void connectAlertBox(
+    BuildContext context,{
+      required String description,
+      required VoidCallback onViewPressed,
+      required VoidCallback onConfirmPressed,
+    }) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      final screenWidth = MediaQuery.of(context).size.width;
+      return AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        ),
+        contentPadding: EdgeInsets.all(screenWidth * 0.04),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            /// Confirmation message
+            Text(
+              description,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.roboto(
+                fontSize: screenWidth * 0.038,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+            ),
+
+            SizedBox(height: screenWidth * 0.06),
+
+            /// Buttons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                // View Button
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      onViewPressed();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.black),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "View",
+                          style: GoogleFonts.roboto(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                            fontSize: screenWidth * 0.04,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 12),
+                // Confirm Button
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      onConfirmPressed();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Confirm",
+                          style: GoogleFonts.roboto(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: screenWidth * 0.04,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+void connectInnerAlertBox(
+    BuildContext context,{
+      required String description,
+      required VoidCallback onConfirmPressed,
+    }) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      final screenWidth = MediaQuery.of(context).size.width;
+      return AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        ),
+        contentPadding: EdgeInsets.all(screenWidth * 0.04),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            /// Confirmation message
+            Text(
+              description,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.roboto(
+                fontSize: screenWidth * 0.038,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+            ),
+
+            SizedBox(height: screenWidth * 0.06),
+
+            /// Buttons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      onConfirmPressed();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Confirm",
+                          style: GoogleFonts.roboto(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: screenWidth * 0.04,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}

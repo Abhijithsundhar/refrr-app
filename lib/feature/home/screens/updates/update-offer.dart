@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:icanyon/model/affiliate-model.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/common/global variables.dart';
 import '../../../../core/common/textlength.dart';
@@ -14,8 +15,9 @@ class UpdateOfferPage extends ConsumerStatefulWidget {
   final String image;
   final String description;
   final String currency;
+  final AffiliateModel? affiliate;
 
-  const UpdateOfferPage({
+  const UpdateOfferPage( {
     super.key,
     required this.title,
     required this.amount,
@@ -23,6 +25,7 @@ class UpdateOfferPage extends ConsumerStatefulWidget {
     required this.image,
     required this.description,
     required this.currency,
+    this.affiliate,
   });
 
   @override
@@ -47,13 +50,19 @@ class _UpdateOfferPageState extends ConsumerState<UpdateOfferPage> {
           style: GoogleFonts.roboto(
             fontSize: width * 0.06,
             fontWeight: FontWeight.w500,
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.close, color: Colors.white),
-            onPressed: () => Navigator.pop(context),
+          GestureDetector(
+            onTap: () {
+              // Handle close action here
+              Navigator.pop(context); // or any other logic
+            },
+            child:Padding(
+              padding:  EdgeInsets.only(right: width*.04),
+              child: Icon(Icons.close, color: Colors.black),
+            ),
           ),
         ],
       ),
@@ -154,16 +163,8 @@ class _UpdateOfferPageState extends ConsumerState<UpdateOfferPage> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color(0xFFF3F3F3),
         borderRadius: BorderRadius.circular(30),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 4,
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
       ),
       padding: EdgeInsets.symmetric(
         horizontal: width * .06,
@@ -185,17 +186,20 @@ class _UpdateOfferPageState extends ConsumerState<UpdateOfferPage> {
           SizedBox(height: height * .015),
 
           /// 🖼 Image
-          Container(
-            height: height * .24,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: image.isNotEmpty
-                ? Image.network(image, fit: BoxFit.cover)
-                : Image.asset('assets/images/offerImage1.png'),
+        Container(
+          height: height * .24,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadius.circular(10),
           ),
+          child: image.startsWith('http')
+              ? Image.network(image, fit: BoxFit.cover)
+              : Image.asset(
+            image.isNotEmpty ? image : 'assets/images/offerImage1.png',
+            fit: BoxFit.cover,
+          ),
+        ),
 
           SizedBox(height: height * .03),
 

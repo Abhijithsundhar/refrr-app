@@ -40,7 +40,7 @@ class _ViewsinglepageState extends State<Viewsinglepage> {
         backgroundColor: ColorConstants.primaryColor,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new, color: Colors.white),
+          icon: Icon(Icons.arrow_back_ios_new, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -58,7 +58,7 @@ class _ViewsinglepageState extends State<Viewsinglepage> {
                 style: GoogleFonts.roboto(
                   fontWeight: FontWeight.w600,
                   fontSize: width * .05,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -67,7 +67,7 @@ class _ViewsinglepageState extends State<Viewsinglepage> {
               child: Text(
                 widget.firm.location,
                 style: GoogleFonts.roboto(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: width * .04,
                   fontWeight: FontWeight.w300,
                 ),
@@ -100,7 +100,7 @@ class _ViewsinglepageState extends State<Viewsinglepage> {
                     decoration: BoxDecoration(
                       border: Border(
                         bottom: BorderSide(
-                          color: ColorConstants.primaryColor,
+                          color: ColorConstants.appBlue,
                           width: 1,
                         ),
                       ),
@@ -130,7 +130,7 @@ class _ViewsinglepageState extends State<Viewsinglepage> {
                     decoration: BoxDecoration(
                       border: Border(
                         bottom: BorderSide(
-                          color: ColorConstants.primaryColor,
+                          color: ColorConstants.appBlue,
                           width: 1,
                         ),
                       ),
@@ -170,7 +170,7 @@ class _ViewsinglepageState extends State<Viewsinglepage> {
                     decoration: BoxDecoration(
                       border: Border(
                         bottom: BorderSide(
-                          color: ColorConstants.primaryColor,
+                          color: ColorConstants.appBlue,
                           width: 1,
                         ),
                       ),
@@ -200,7 +200,7 @@ class _ViewsinglepageState extends State<Viewsinglepage> {
                     decoration: BoxDecoration(
                       border: Border(
                         bottom: BorderSide(
-                          color: ColorConstants.primaryColor,
+                          color: ColorConstants.appBlue,
                           width: 1,
                         ),
                       ),
@@ -230,7 +230,7 @@ class _ViewsinglepageState extends State<Viewsinglepage> {
                     decoration: BoxDecoration(
                       border: Border(
                         bottom: BorderSide(
-                          color: ColorConstants.primaryColor,
+                          color: ColorConstants.appBlue,
                           width: 1,
                         ),
                       ),
@@ -260,7 +260,7 @@ class _ViewsinglepageState extends State<Viewsinglepage> {
                     decoration: BoxDecoration(
                       border: Border(
                         bottom: BorderSide(
-                          color: ColorConstants.primaryColor,
+                          color: ColorConstants.appBlue,
                           width: 1,
                         ),
                       ),
