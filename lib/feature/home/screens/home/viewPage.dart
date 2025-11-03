@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icanyon/core/common/global%20variables.dart';
 import 'package:icanyon/core/constants/color-constnats.dart';
+import 'package:icanyon/feature/home/controllor/leads-controller.dart';
 import 'package:icanyon/feature/home/screens/home/addfirm.dart';
 import 'package:icanyon/feature/home/screens/home/bottombar.dart';
 import 'package:icanyon/feature/home/screens/home/profile-tab-page.dart';
@@ -31,15 +35,6 @@ class _ViewPageState extends State<ViewPage> with SingleTickerProviderStateMixin
   List<AddFirmModel> filteredFirms = [];
   List<ServiceModel> allServices = [];
 
-  final List<String> agentNames = [
-    "Jamshid",
-    "Jamshid",
-    "Vishnu",
-    "Fathima",
-    "Rajan",
-    "Aisha",
-    "Rahul"
-  ];
    TabController? _tabController;
   int _currentIndex = 0;
   @override
@@ -165,95 +160,166 @@ class _ViewPageState extends State<ViewPage> with SingleTickerProviderStateMixin
               child: Column(
                 children: [
                   SizedBox(height: width * .02),
-                  SizedBox(
-                    height: height * .13,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: imageList.length + 1,
-                      itemBuilder: (context, index) {
-                        final isFirst = index == 0;
-                        final isLast = index == imageList.length;
-                        final String displayName =
-                        (!isFirst && !isLast && index < agentNames.length)
-                            ? agentNames[index]
-                            : "";
+                 Consumer(builder: (context, ref, child) {
+                   final affiliateModel=ref.watch(affiliateProvider);
+                   final Map<String,dynamic> map={
+                     "searchQuery":"",
+                     "affiliateId":affiliateModel?.id??""
+                   };
+                   return  ref.watch(agentsStreamProvider(jsonEncode(map))).when(data: (agents) {
+                     return  SizedBox(
+                       height: height * .13,
+                       child: ListView.builder(
+                         scrollDirection: Axis.horizontal,
+                         itemCount:
+                         1 + // For the "Add Agent" button
+                             (agents.length > 10 ? 10 : agents.length) + // Show up to 10 agents
+                             (agents.length > 10 ? 1 : 0), // Add "View All" if more than 10
+                         itemBuilder: (context, index) {
+                           // First item → Add Agent
+                           if (index == 0) {
+                             return Padding(
+                               padding: EdgeInsets.only(
+                                   left: width * .035, top: height * .01, right: width * .02),
+                               child: InkWell(
+                                 onTap: () {
+                                   showModalBottomSheet(
+                                     context: context,
+                                     isScrollControlled: true,
+                                     shape: const RoundedRectangleBorder(
+                                       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                                     ),
+                                     builder: (_) => const AddAgent(),
+                                   );
+                                 },
+                                 child: Column(
+                                   children: [
+                                     Container(
+                                       width: width * .15,
+                                       height: width * .15,
+                                       decoration: BoxDecoration(
+                                         shape: BoxShape.circle,
+                                         color: Colors.white,
+                                         border: Border.all(
+                                           color: ColorConstants.appBlue,
+                                           width: 1,
+                                         ),
+                                       ),
+                                       child: Icon(Icons.add, color: Colors.black, size: width * .07),
+                                     ),
+                                     const SizedBox(height: 1),
+                                     Text(
+                                       "New\nAgent",
+                                       textAlign: TextAlign.center,
+                                       style: TextStyle(
+                                           fontSize: width * .03,
+                                           fontWeight: FontWeight.w500,
+                                           color: Colors.black),
+                                     ),
+                                   ],
+                                 ),
+                               ),
+                             );
+                           }
 
-                        return Padding(
-                          padding: EdgeInsets.only(
-                              left: width * .035,
-                              top: height * .01,
-                              right: width * .02),
-                          child: InkWell(
-                            onTap: () {
-                              if (isFirst) {
-                                showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(20)),
-                                  ),
-                                  builder: (_) => const AddAgent(),
-                                );
-                              } else if (isLast) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => ViewAllAgents()));
-                              } else {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => AgentProfile()));
-                              }
-                            },
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: width * .15,
-                                  height: width * .15,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white,
-                                    border: (isFirst || isLast)
-                                        ? Border.all(
-                                        color: ColorConstants.appBlue,
-                                        width: 1)
-                                        : null,
-                                  ),
-                                  child: ClipOval(
-                                    child: isFirst
-                                        ? Icon(Icons.add,
-                                        color: Colors.black,
-                                        size: width * .07)
-                                        : isLast
-                                        ? Icon(Icons.arrow_forward,
-                                        color: Colors.black,
-                                        size: width * .07)
-                                        : Image.asset(imageList[index],
-                                        fit: BoxFit.cover),
-                                  ),
-                                ),
-                                const SizedBox(height: 1),
-                                Text(
-                                  isFirst
-                                      ? "New\nAgent"
-                                      : isLast
-                                      ? "View All"
-                                      : displayName,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: width * .03,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black),
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                           // Last item → View All (only if more than 10)
+                           if (agents.length > 10 && index == 11) {
+                             return Padding(
+                               padding: EdgeInsets.only(
+                                   left: width * .035, top: height * .01, right: width * .02),
+                               child: InkWell(
+                                 onTap: () {
+                                   Navigator.push(
+                                     context,
+                                     MaterialPageRoute(builder: (_) => ViewAllAgents(agentModelList: agents,)),
+                                   );
+                                 },
+                                 child: Column(
+                                   children: [
+                                     Container(
+                                       width: width * .15,
+                                       height: width * .15,
+                                       decoration: BoxDecoration(
+                                         shape: BoxShape.circle,
+                                         color: Colors.white,
+                                         border: Border.all(
+                                           color: ColorConstants.appBlue,
+                                           width: 1,
+                                         ),
+                                       ),
+                                       child: Icon(Icons.arrow_forward,
+                                           color: Colors.black, size: width * .07),
+                                     ),
+                                     const SizedBox(height: 1),
+                                     Text(
+                                       "View\nAll",
+                                       textAlign: TextAlign.center,
+                                       style: TextStyle(
+                                           fontSize: width * .03,
+                                           fontWeight: FontWeight.w500,
+                                           color: Colors.black),
+                                     ),
+                                   ],
+                                 ),
+                               ),
+                             );
+                           }
+
+                           // Otherwise → Show agent list items (1–10)
+                           final agent = agents[index - 1];
+                           return Padding(
+                             padding: EdgeInsets.only(
+                                 left: width * .035, top: height * .01, right: width * .02),
+                             child: InkWell(
+                               onTap: () {
+                                 Navigator.push(
+                                   context,
+                                   MaterialPageRoute(builder: (_) => AgentProfile(agentModel: agent)),
+                                 );
+                               },
+                               child: Column(
+                                 children: [
+                                   Container(
+                                     width: width * .15,
+                                     height: width * .15,
+                                     decoration: const BoxDecoration(
+                                       shape: BoxShape.circle,
+                                       color: Colors.white,
+                                     ),
+                                     child: ClipOval(
+                                       child: agent.profile != null && agent.profile!.isNotEmpty
+                                           ? CachedNetworkImage(
+                                         imageUrl: agent.profile!,
+                                         fit: BoxFit.cover,
+                                       )
+                                           : Icon(Icons.person,
+                                           color: Colors.grey, size: width * .07),
+                                     ),
+                                   ),
+                                   const SizedBox(height: 1),
+                                   Text(
+                                     agent.name ?? '',
+                                     textAlign: TextAlign.center,
+                                     style: TextStyle(
+                                       fontSize: width * .03,
+                                       fontWeight: FontWeight.w500,
+                                       color: Colors.black,
+                                     ),
+                                   ),
+                                 ],
+                               ),
+                             ),
+                           );
+                         },
+                       ),
+                     );
+                   },
+                       error: (error, stackTrace) {
+                         print(error.toString());
+                         return Text(error.toString());
+                       },
+                       loading: () => Center(child: CircularProgressIndicator()),);
+                 },),
                   SizedBox(height: width * .025),
                 ],
               ),

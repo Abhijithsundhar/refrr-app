@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:icanyon/core/constants/color-constnats.dart';
-
 import '../../../../core/common/global variables.dart';
+import '../../../../model/agent_model.dart';
 import '../agent/agent-add-page.dart';
 import '../agent/agent-profile.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ViewAllAgents extends StatelessWidget {
-  const ViewAllAgents({super.key});
+  final List<AgentModel> agentModelList;
+  const ViewAllAgents({super.key, required this.agentModelList});
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +30,7 @@ class ViewAllAgents extends StatelessWidget {
           ),
         ),
         actions: [
-          Icon(
-            Icons.search,
-            color: Colors.black,
-            size: width * .06,
-          ),
+          Icon(Icons.search, color: Colors.black, size: width * .06),
           SizedBox(width: width * .03),
         ],
       ),
@@ -40,7 +38,6 @@ class ViewAllAgents extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Heading
-          SizedBox(width: width * .03),
           Padding(
             padding: EdgeInsets.only(
               left: width * .035,
@@ -50,28 +47,27 @@ class ViewAllAgents extends StatelessWidget {
             child: Text(
               "ALL AGENTS",
               style: TextStyle(
-                fontSize: height * .015,
+                fontSize: height * .018,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
             ),
           ),
-          SizedBox(width: width * .03),
           // GridView
           Expanded(
             child: GridView.builder(
-              padding: EdgeInsets.zero,
+              padding: EdgeInsets.symmetric(horizontal: width * .02),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4, // ✅ 4 per row now
-                childAspectRatio: 0.8, // adjust height vs width
+                crossAxisCount: 4, // 4 per row
+                childAspectRatio: 0.8, // height/width ratio
               ),
-              itemCount: imageList.length,
+              itemCount: agentModelList.length + 1, // +1 for "Add Agent"
               itemBuilder: (context, index) {
                 final bool isFirst = index == 0;
 
+                // Handle tap
                 void handleTap() {
                   if (isFirst) {
-                    // New Agent -> Add firm
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
@@ -80,21 +76,19 @@ class ViewAllAgents extends StatelessWidget {
                       ),
                       builder: (context) => const AddAgent(),
                     );
-
-                  }  else {
+                  } else {
+                    final agent = agentModelList[index - 1];
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => AgentProfile()),
+                      MaterialPageRoute(
+                        builder: (_) => AgentProfile(agentModel: agent),
+                      ),
                     );
                   }
                 }
 
                 return Padding(
-                  padding: EdgeInsets.only(
-                    left: width * .02,
-                    top: height * .01,
-                    right: width * .02,
-                  ),
+                  padding: EdgeInsets.symmetric(vertical: height * .008),
                   child: GestureDetector(
                     onTap: handleTap,
                     child: Column(
@@ -116,18 +110,29 @@ class ViewAllAgents extends StatelessWidget {
                                 ? Icon(Icons.add,
                                 color: Colors.black, size: width * .07)
                                 : ClipOval(
-                              child: Image.asset(
-                                imageList[index],
+                              child: agentModelList[index - 1].profile !=
+                                  null &&
+                                  agentModelList[index - 1]
+                                      .profile
+                                      .isNotEmpty
+                                  ? CachedNetworkImage(
+                                imageUrl: agentModelList[index - 1]
+                                    .profile,
                                 fit: BoxFit.cover,
                                 width: width * .18,
                                 height: width * .16,
-                              ),
+                              )
+                                  : Icon(Icons.person,
+                                  color: Colors.grey,
+                                  size: width * .07),
                             ),
                           ),
                         ),
-                        const SizedBox(height: 2),
+                        const SizedBox(height: 3),
                         Text(
-                          isFirst ? "New\nAgent" : 'Abhijith \nSundhar',
+                          isFirst
+                              ? "New\nAgent"
+                              : (agentModelList[index - 1].name ?? ''),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: height * .012,

@@ -199,7 +199,7 @@ class PipeLineInnerPage extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context) => AgentProfile(),));
+                      // Navigator.push(context,MaterialPageRoute(builder: (context) => AgentProfile(),));
                     },
                     child: CircleAvatar(
                       radius: 29,
@@ -212,7 +212,7 @@ class PipeLineInnerPage extends StatelessWidget {
                   ),
                    GestureDetector(
                      onTap: (){
-                       Navigator.push(context,MaterialPageRoute(builder: (context) => AgentProfile(),));
+                       // Navigator.push(context,MaterialPageRoute(builder: (context) => AgentProfile(),));
                      },
                      child: Text(
                       'Rajeev Lk',

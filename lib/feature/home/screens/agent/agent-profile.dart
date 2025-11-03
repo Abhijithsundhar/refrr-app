@@ -5,12 +5,14 @@ import 'package:icanyon/core/common/global%20variables.dart';
 import 'package:icanyon/core/constants/color-constnats.dart';
 import 'package:icanyon/feature/home/screens/agent/agent-account-tab.dart';
 import 'package:icanyon/feature/home/screens/agent/agent-personal-info.dart';
+import 'package:icanyon/model/agent_model.dart';
 
 import 'agent-careerprefer-page.dart';
 import 'agent-prefessional-info.dart';
 
 class AgentProfile extends StatefulWidget {
-  const AgentProfile({Key? key}) : super(key: key);
+  final AgentModel agentModel;
+  const AgentProfile({Key? key,required this.agentModel}) : super(key: key);
 
   @override
   State<AgentProfile> createState() => _AgentProfileState();
@@ -73,7 +75,7 @@ class _AgentProfileState extends State<AgentProfile>
                 children: [
                   CircleAvatar(
                     radius: 30,
-                    backgroundImage: AssetImage("assets/accountProfileImage.png"),
+                    backgroundImage: NetworkImage(widget.agentModel.profile),
                   ),
                   SizedBox(width: 12),
                   Column(
@@ -81,7 +83,7 @@ class _AgentProfileState extends State<AgentProfile>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Jacob Sacaria",
+                        widget.agentModel.name,
                         style: GoogleFonts.roboto(
                           fontSize: width*.04,
                           fontWeight: FontWeight.w400,
@@ -89,7 +91,7 @@ class _AgentProfileState extends State<AgentProfile>
                         ),
                       ),
                       Text(
-                        "Dubai",
+                        widget.agentModel.country,
                         style: GoogleFonts.roboto(
                           fontSize: width*.035,
                           fontWeight: FontWeight.w400,
@@ -171,8 +173,8 @@ class _AgentProfileState extends State<AgentProfile>
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(
-                        'assets/accountProfileImage.png',
+                      child: Image.network(
+                        widget.agentModel.profile,
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -185,7 +187,7 @@ class _AgentProfileState extends State<AgentProfile>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Jacob Sacaria',
+                         widget.agentModel.name,
                           style: GoogleFonts.roboto(
                             color: Colors.black,
                             fontWeight: FontWeight.w600,
@@ -193,7 +195,7 @@ class _AgentProfileState extends State<AgentProfile>
                           ),
                         ),
                         Text(
-                          'Dubai',
+                          widget.agentModel.country,
                           style: GoogleFonts.roboto(
                             color: Colors.grey,
                             fontWeight: FontWeight.w400,

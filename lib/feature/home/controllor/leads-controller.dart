@@ -1,7 +1,10 @@
 
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:icanyon/model/agent_model.dart';
 import '../../../core/common/snackbar.dart';
 import '../../../model/leads-model.dart';
 import '../repository/leads-repository.dart';
@@ -16,6 +19,16 @@ final leadsStreamProvider = StreamProvider.family<List<LeadsModel>, String>((ref
   final repository = ref.watch(leadsRepositoryProvider);
 
   return repository.getLeads(searchQuery);
+});
+/// agent Stream Provider with search support
+final agentsStreamProvider = StreamProvider.family<List<AgentModel>, String>((ref,String data) {
+  final repository = ref.watch(leadsRepositoryProvider);
+final Map<String,dynamic> map=jsonDecode(data);
+  return repository.getAgents(map['searchQuery'],map['affiliateId']);
+});
+final agentProvider = FutureProvider.family<AgentModel?, String>((ref, String phone) async {
+  final repository = ref.watch(leadsRepositoryProvider);
+    return repository.getAgent(phone);
 });
 
 
@@ -62,5 +75,26 @@ Future<void> updateLeads({
 Stream <List<LeadsModel>>getLeads(String searchQuery ){
   return _repository.getLeads(searchQuery);
 }
+/// agent stream
+Stream <List<AgentModel>>getAgents(String searchQuery ,String affiliateId){
+  return _repository.getAgents(searchQuery,affiliateId);
+}
 
+Future<AgentModel>getAgent(String searchQuery){
+  return _repository.getAgent(searchQuery);
+}
+
+///update agent
+Future<void> updateAgents({
+  required AgentModel agentModel,
+  required BuildContext context,
+}) async {
+  state = true;
+  var snap=await _repository.updateAgents(agentModel);
+  state = false;
+  snap.fold((l) =>showCommonSnackbar(context,l.failure) , (r) {
+    showCommonSnackbar(context,"Sub agent added successfully");
+    Navigator.pop(context);
+  });
+}
 }
